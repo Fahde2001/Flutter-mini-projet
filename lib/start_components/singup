@@ -1,0 +1,166 @@
+import 'package:flutter/material.dart';
+
+class SignUpBottomSheet extends StatefulWidget {
+  @override
+  _SignUpBottomSheetState createState() => _SignUpBottomSheetState();
+}
+
+class _SignUpBottomSheetState extends State<SignUpBottomSheet> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
+  String confirmPasswordError = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // Call the function to show the bottom sheet
+    WidgetsBinding.instance?.addPostFrameCallback((_) {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      child: SingleChildScrollView(
+        child: Container(
+          height: 600, // Adjust the height here
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Sign Up",
+                  style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: Text(
+                    "Hello! Welcome to TaskFlow. Let's get started.",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(Icons.email),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: "Password",
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(Icons.lock),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: confirmPasswordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: "Confirm Password",
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(Icons.lock),
+                    ),
+                    errorText: confirmPasswordError.isNotEmpty
+                        ? confirmPasswordError
+                        : null,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Validate password and confirm password
+                    if (passwordController.text !=
+                        confirmPasswordController.text) {
+                      setState(() {
+                        confirmPasswordError = 'Passwords do not match';
+                      });
+                    } else {
+                      // Handle sign-up button press
+                      // Access emailController.text and passwordController.text
+                      confirmPasswordError = ''; // Reset error message
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFF77D8E),
+                    minimumSize: Size(double.infinity, 56),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(25),
+                        bottomLeft: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
+                      ),
+                    ),
+                  ),
+                  icon: const Icon(Icons.arrow_right),
+                  label: const Text("Sign Up"),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+ return Slidable(
+                    startActionPane:
+                        ActionPane(motion: const StretchMotion(), children: [
+                           CheckboxListTile(
+                            title: Text(tasks[index].name),
+                            value: tasks[index].completed,
+                            onChanged: (value) {
+                              setState(() {
+                                tasks[index].completed = value ?? false;
+                              });
+                            },
+                            controlAffinity: ListTileControlAffinity
+                                .leading, // Align checkbox to the left
+                            contentPadding:
+                            EdgeInsets.all(0), // Remove default padding
+                          ),
+                          SlidableAction(
+                            onPressed: _DeleteTask(),
+                            label: 'Delete',
+                              backgroundColor:Colors.red,
+                              icon: Icons.delete,
+                             ),
+                          SlidableAction(
+                            onPressed: _DeleteTask(),
+                            label: 'Update',
+                            backgroundColor:Colors.lightGreen,
+                            icon: Icons.update,
+                          ),
+
+                        ]),
+                    endActionPane: ActionPane(motion: const BehindMotion(), children: [
+                      SlidableAction(
+                        onPressed: _DeleteTask(),
+                        label: 'Delete',
+                        backgroundColor:Colors.red,
+                        icon: Icons.delete,
+                      ),
+                    ]),
+                  );
